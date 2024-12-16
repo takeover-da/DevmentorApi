@@ -33,10 +33,6 @@ public class Lecture extends BaseEntity {
 	@Comment("강의번호")
 	int lectureNo;
 
-	@Column(length = 50, nullable = false)
-	@Comment("회원아이디")
-	String memberId;
-
 	@Column(length = 200, nullable = false)
 	@Comment("강의제목")
 	String title;
