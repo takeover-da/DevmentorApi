@@ -27,6 +27,23 @@ public class RoadmapServiceImpl implements RoadmapService {
         // DTO를 엔티티로 변환 후 저장
         Roadmap entity = dtoToEntity(dto);
         roadmapRepository.save(entity);
+
+        // 강의 리스트 추가
+        List<Integer> rectures = dto.getLectures();
+        if(rectures!=null && rectures.size()>0) {
+            // 새로운 강의리스트 추가
+            for (int rectureNo : rectures) {
+                // 강의 데이터 생성
+                Lecture lecture = Lecture.builder().lectureNo(rectureNo).build();
+                // 로드맵 상세 데이터 생성
+                RoadmapDetail detail = RoadmapDetail.builder()
+                        .roadmap(entity)
+                        .lecture(lecture)
+                        .build();
+                detailRepository.save(detail);
+            }
+        }
+
         return true;
     }
 

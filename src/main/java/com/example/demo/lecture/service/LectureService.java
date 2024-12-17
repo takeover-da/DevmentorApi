@@ -39,6 +39,7 @@ public interface LectureService {
                 .title(entity.getTitle())
                 .description(entity.getDescription())
                 .instructorName(entity.getInstructorName())
+                .fileurl(entity.getFileurl())
                 .regDate(entity.getRegDate())
                 .modDate(entity.getModDate())
                 .build();

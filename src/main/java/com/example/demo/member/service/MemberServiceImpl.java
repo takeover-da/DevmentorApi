@@ -4,17 +4,21 @@ import com.example.demo.member.dto.MemberDTO;
 import com.example.demo.member.entity.Member;
 import com.example.demo.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
+//@Service
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public boolean register(MemberDTO dto) {
@@ -25,6 +29,11 @@ public class MemberServiceImpl implements MemberService {
         }
         // DTO를 엔티티로 변환 후 저장
         Member entity = dtoToEntity(dto);
+
+        // 패스워드 인코더로 패스워드 암호화하기
+        String enPw = passwordEncoder.encode(entity.getPassword());
+        entity.setPassword(enPw);
+
         memberRepository.save(entity);
         return true; // 등록 성공
     }

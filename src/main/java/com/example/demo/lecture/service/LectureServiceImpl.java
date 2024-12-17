@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.demo.util.S3FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.lecture.dto.LectureDTO;
 import com.example.demo.lecture.entity.Lecture;
 import com.example.demo.lecture.repository.LectureRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class LectureServiceImpl implements LectureService {
@@ -17,9 +19,20 @@ public class LectureServiceImpl implements LectureService {
 	@Autowired
 	LectureRepository lectureRepository;
 
+	@Autowired
+	S3FileUtil fileUtil;
+
 	@Override
 	public int register(LectureDTO dto) {
 		Lecture entity = dtoToEntity(dto);
+
+		// 이미지 업로드
+		MultipartFile file = dto.getFile();
+		if(file != null){
+			String fileurl = fileUtil.fileUpload(dto.getFile());
+			entity.setFileurl(fileurl);
+		}
+
 		lectureRepository.save(entity);
 		int newNo = entity.getLectureNo();
 		return newNo;
@@ -59,6 +72,14 @@ public class LectureServiceImpl implements LectureService {
 			entity.setTitle(dto.getTitle());
 			entity.setDescription(dto.getDescription());
 			entity.setInstructorName(dto.getInstructorName());
+
+			// 이미지 업데이트
+			MultipartFile file = dto.getFile();
+			if(file != null){
+				String fileurl = fileUtil.fileUpload(dto.getFile());
+				entity.setFileurl(fileurl);
+			}
+
 			// 엔티티 저장
 			lectureRepository.save(entity);
 		}

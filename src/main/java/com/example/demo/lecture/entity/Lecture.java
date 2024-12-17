@@ -45,4 +45,8 @@ public class Lecture extends BaseEntity {
 	@Comment("강사명")
 	String instructorName;
 
+	@Column(length = 200)
+	@Comment("이미지 경로")
+	String fileurl;
+
 }
