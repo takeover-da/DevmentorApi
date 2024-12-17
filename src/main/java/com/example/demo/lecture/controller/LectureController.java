@@ -56,16 +56,16 @@ public class LectureController {
 
 	// 강의 수정
 	@PutMapping("/modify")
-	public ResponseEntity<?> modify(LectureDTO dto) {
+	public ResponseEntity<String> modify(LectureDTO dto) {
 		service.modify(dto);
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("강의 정보가 수정되었습니다.", HttpStatus.OK);
 	}
 
 	// 강의 삭제
 	@DeleteMapping("/remove")
-	public ResponseEntity<?> remove(@RequestParam(name = "lectureNo") int lectureNo) {
+	public ResponseEntity<String> remove(@RequestParam(name = "lectureNo") int lectureNo) {
 		service.remove(lectureNo);
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("강의가 삭제되었습니다.", HttpStatus.OK);
 	}
 
 }

@@ -75,14 +75,4 @@ public class LectureRepositoryTest {
 		System.out.println("강의 삭제 완료.");
 	}
 
-//	@Test
-//	public void 회원별강의조회() {
-//		// 특정 회원의 강의 조회
-//		String memberId = "user1"; // 회원 ID 가정
-//		List<Lecture> list = repository.findByMemberId(memberId);
-//		for (Lecture lecture : list) {
-//			System.out.println("회원의 강의: " + lecture);
-//		}
-//	}
-
 }

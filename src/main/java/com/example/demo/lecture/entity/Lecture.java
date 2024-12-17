@@ -1,15 +1,10 @@
 package com.example.demo.lecture.entity;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.Comment;
 
 import com.example.demo.common.BaseEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +24,12 @@ import lombok.ToString;
 public class Lecture extends BaseEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "lecture_seq_generator")
+	@TableGenerator(
+			name = "lecture_seq_generator",
+			initialValue = 100, // 시작 값 설정
+			allocationSize = 1  // 증가 단위
+	)
 	@Comment("강의번호")
 	int lectureNo;
 
