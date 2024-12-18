@@ -13,6 +13,9 @@ public interface LectureService {
     // 강의 목록 조회 메소드
     List<LectureDTO> getList();
 
+    // 강의 이미지 목록 조회 메소드
+    List<String> getImgList();
+
     // 강의 상세 조회 메소드
     LectureDTO read(int lectureNo);
 

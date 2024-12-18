@@ -30,6 +30,13 @@ public class LectureController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
+	// 강의 이미지 목록 조회
+	@GetMapping("/img")
+	public ResponseEntity<?> imglist() {
+		List<String> list = service.getImgList();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
 	// 강의 등록 (폼 데이터 처리)
 	@PostMapping("/register")
 	public ResponseEntity<?> register(LectureDTO dto) {

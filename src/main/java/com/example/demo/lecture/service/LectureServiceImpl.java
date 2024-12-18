@@ -50,6 +50,17 @@ public class LectureServiceImpl implements LectureService {
 	}
 
 	@Override
+	public List<String> getImgList() {
+		// 강의 목록 조회
+		List<Lecture> lectures = lectureRepository.findAll();
+		// 엔티를 DTO로 변환
+		List<String> list = lectures.stream()
+				.map(entity->entity.getFileurl())
+				.collect(Collectors.toList());
+		return list;
+	}
+
+	@Override
 	public LectureDTO read(int lectureNo) {
 		Optional<Lecture> result = lectureRepository.findById(lectureNo);
 		if (result.isPresent()) {
