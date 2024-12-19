@@ -1,17 +1,20 @@
 package com.example.demo.roadmap.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.demo.lecture.entity.Lecture;
 import com.example.demo.roadmap.dto.RoadmapDTO;
 import com.example.demo.roadmap.entity.Roadmap;
 import com.example.demo.roadmap.entity.RoadmapDetail;
 import com.example.demo.roadmap.repository.RoadmapDetailRepository;
 import com.example.demo.roadmap.repository.RoadmapRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import com.example.demo.util.S3FileUtil;
 
 @Service
 public class RoadmapServiceImpl implements RoadmapService {
@@ -21,11 +24,29 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     @Autowired
     RoadmapDetailRepository detailRepository;
+    
+	@Autowired
+	S3FileUtil fileUtil;
 
     @Override
     public boolean register(RoadmapDTO dto) {
         // DTO를 엔티티로 변환 후 저장
         Roadmap entity = dtoToEntity(dto);
+        
+        // 섬네일 업로드
+     	MultipartFile thumnailFile = dto.getThumnailFile();
+     	if(thumnailFile != null){
+     		String fileurl = fileUtil.fileUpload(thumnailFile);
+     		entity.setThumnail(fileurl);
+     	}
+     	
+        // 상세이미지 업로드
+     	MultipartFile detailImgFile = dto.getDetailImgFile();
+     	if(detailImgFile != null){
+     		String fileurl = fileUtil.fileUpload(detailImgFile);
+     		entity.setDetailImg(fileurl);
+     	}
+        
         roadmapRepository.save(entity);
 
         // 강의 리스트 추가
@@ -106,6 +127,19 @@ public class RoadmapServiceImpl implements RoadmapService {
                     detailRepository.save(detail);
                 }
             }
+            
+            // 섬네일 및 상세이미지 수정
+         	MultipartFile thumnailFile = dto.getThumnailFile();
+         	if(thumnailFile != null){
+         		String fileurl = fileUtil.fileUpload(thumnailFile);
+         		entity.setThumnail(fileurl);
+         	}
+         	
+         	MultipartFile detailImgFile = dto.getDetailImgFile();
+         	if(detailImgFile != null){
+         		String fileurl = fileUtil.fileUpload(detailImgFile);
+         		entity.setDetailImg(fileurl);
+         	}
             
             // 엔티티 저장
             roadmapRepository.save(entity);

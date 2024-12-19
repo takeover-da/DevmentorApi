@@ -1,9 +1,21 @@
 package com.example.demo.roadmap.entity;
 
-import com.example.demo.common.BaseEntity;
-import jakarta.persistence.*;
-import lombok.*;
 import org.hibernate.annotations.Comment;
+
+import com.example.demo.common.BaseEntity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "roadmap")
@@ -30,5 +42,11 @@ public class Roadmap extends BaseEntity {
 
     @Comment("로드맵의 난이도")
     int difficulty;
+    
+	@Column(length = 300)
+	String thumnail; //대표이미지
+
+	@Column(length = 300)
+	String detailImg; //상세이미지
 
 }
