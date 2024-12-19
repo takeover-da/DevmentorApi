@@ -1,5 +1,6 @@
 package com.example.demo.lecture.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,9 @@ public class LectureController {
 
 	// 강의 등록 (폼 데이터 처리)
 	@PostMapping("/register")
-	public ResponseEntity<?> register(LectureDTO dto) {
+	public ResponseEntity<?> register(LectureDTO dto, Principal principal) {
+		
+		dto.setInstructorName(principal.getName());
 		
 		int lectureNo = service.register(dto);
 

@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.example.demo.util.S3FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.lecture.dto.LectureDTO;
 import com.example.demo.lecture.entity.Lecture;
 import com.example.demo.lecture.repository.LectureRepository;
-import org.springframework.web.multipart.MultipartFile;
+import com.example.demo.util.S3FileUtil;
 
 @Service
 public class LectureServiceImpl implements LectureService {
@@ -82,7 +82,6 @@ public class LectureServiceImpl implements LectureService {
 			// 변경할 내용 업데이트
 			entity.setTitle(dto.getTitle());
 			entity.setDescription(dto.getDescription());
-			entity.setInstructorName(dto.getInstructorName());
 
 			// 이미지 업데이트
 			MultipartFile file = dto.getFile();
