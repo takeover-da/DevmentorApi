@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.lecture.entity.Lecture;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,8 +34,11 @@ public class RoadmapDTO {
     // 로드맵의 난이도
     int difficulty;
     
-    // 강의 리스트
+    // 강의 번호 리스트
     List<Integer> lectures;
+    
+    // 실제 강의 리스트
+    List<Lecture> lectureList;
     
     // 대표이미지 파일
 	MultipartFile thumnailFile; 

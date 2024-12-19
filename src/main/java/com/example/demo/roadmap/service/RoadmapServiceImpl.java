@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.lecture.entity.Lecture;
+import com.example.demo.lecture.repository.LectureRepository;
 import com.example.demo.roadmap.dto.RoadmapDTO;
 import com.example.demo.roadmap.entity.Roadmap;
 import com.example.demo.roadmap.entity.RoadmapDetail;
@@ -24,6 +25,9 @@ public class RoadmapServiceImpl implements RoadmapService {
 
     @Autowired
     RoadmapDetailRepository detailRepository;
+    
+    @Autowired
+    LectureRepository lectureRepository;
     
 	@Autowired
 	S3FileUtil fileUtil;
@@ -78,6 +82,10 @@ public class RoadmapServiceImpl implements RoadmapService {
                     List<Integer> lectures = detailRepository.getLectureListByRoadmapNo(entity.getRoadmapNo());
                     RoadmapDTO dto = entityToDto(entity);
                     dto.setLectures(lectures);
+                    
+                    List<Lecture> leList = lectureRepository.getLectureList(lectures);
+                    dto.setLectureList(leList);
+                    
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -92,6 +100,10 @@ public class RoadmapServiceImpl implements RoadmapService {
             RoadmapDTO dto = entityToDto(entity);
             List<Integer> lectures = detailRepository.getLectureListByRoadmapNo(dto.getRoadmapNo());
             dto.setLectures(lectures);
+            
+            List<Lecture> leList = lectureRepository.getLectureList(lectures);
+            dto.setLectureList(leList);
+            
             return dto;
         } else {
             return null;
